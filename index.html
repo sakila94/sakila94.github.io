@@ -27,71 +27,75 @@
   <link href="css/style.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>"
   <script src="paho-mqtt.js" type="text/javascript" ></script>
-	<script type="text/javascript">
-	//src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"
-	//src="paho-mqtt.js"
-	//Using the HiveMQ public Broker, with a random client Id
-	 //var client = new Paho.MQTT.Client("broker.mqttdashboard.com", 8000, "myclientid_athavan" );//parseInt(Math.random() * 100, 10)
-	//var client = new Paho.MQTT.Client("iot.eclipse.org", Number(1883), "/ws", "clientId12354");
-	var client = new Paho.MQTT.Client("wss://iot.eclipse.org:443/ws", "myClientId" + new Date().getTime());
+  <script type="text/javascript">
+  //src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"
+  //src="paho-mqtt.js"
+  //Using the HiveMQ public Broker, with a random client Id
+   //var client = new Paho.MQTT.Client("broker.mqttdashboard.com", 8000, "myclientid_athavan" );//parseInt(Math.random() * 100, 10)
+  //var client = new Paho.MQTT.Client("iot.eclipse.org", Number(1883), "/ws", "clientId12354");
+  var client = new Paho.MQTT.Client("wss://iot.eclipse.org:443/ws", "myClientId" + new Date().getTime());
 
-	// set callback handlers
-	client.onConnectionLost = function (responseObject) {
-	    console.log("Connection Lost: "+responseObject.errorMessage);
-	}
+  // set callback handlers
+  client.onConnectionLost = function (responseObject) {
+      console.log("Connection Lost: "+responseObject.errorMessage);
+  }
 
-	client.onMessageArrived = function (message) {
-	  console.log("Message Arrived: "+message.payloadString);
-	}
+  client.onMessageArrived = function (message) {
+    console.log("Message Arrived: "+message.payloadString);
+  }
 
-	// Called when the connection is made
-	function onConnect(){
-	    console.log("connected!");
-	}
+  // Called when the connection is made
+  function onConnect(){
+      console.log("connected!");
+  }
 
-	// Connect the client, providing an onConnect callback
-	client.connect({
-	    onSuccess: onConnect
+  // Connect the client, providing an onConnect callback
+  client.connect({
+      onSuccess: onConnect
 
-	});
-	client.onMessageArrived = function (message) {
-	  console.log("Message Arrived: " + message.payloadString);
+  });
+  client.onMessageArrived = function (message) {
+    console.log("Message Arrived: " + message.payloadString);
 
-	}
+  }
 
-	 //Creates a new Messaging.Message Object and sends it to the HiveMQ MQTT Broker
-	 function publish(payload, topic, qos) {
-	     //Send your message (also possible to serialize it as JSON or protobuf or just use a string, no limitations)
-	     console.log("hello world");
-	     var message = new Paho.MQTT.Message(payload);
-	     message.destinationName = topic;
-	     message.qos = qos;
-	     alert("switch on lamp");
-       
-	     console.log("we are done");
-	     client.send(message);
-	 }
+   //Creates a new Messaging.Message Object and sends it to the HiveMQ MQTT Broker
+   function publish(payload, topic, qos,id) {
+       //Send your message (also possible to serialize it as JSON or protobuf or just use a string, no limitations)
 
-	 function fun1(){
-	    console.log("hello world");
-	    client.connect(options);
-	}
+      document.getElementById(id).style.background = "blue";
+
+
+       console.log("hello world");
+       var message = new Paho.MQTT.Message(payload);
+       message.destinationName = topic;
+       message.qos = qos;
+       alert("switch on lamp");
+
+       console.log("we are done");
+       client.send(message);
+   }
+
+   function fun1(){
+      console.log("hello world");
+      client.connect(options);
+  }
 
   function disableBtn() {
     document.getElementById("myBtn").disabled = true;
     // document.getElementById("myBtn").style.backgroundColor = "black";
 }
 
-	//<input id="clickMe" type="button" value="clickme" onclick="fun1();" />
-	 </script>
+  //<input id="clickMe" type="button" value="clickme" onclick="fun1();" />
+   </script>
 
 
-	  <!-- =======================================================
-	    Theme Name: Avilon
-	    Theme URL: https://bootstrapmade.com/avilon-bootstrap-landing-page-template/
-	    Author: BootstrapMade.com
-	    License: https://bootstrapmade.com/license/
-	  ======================================================= -->
+    <!-- =======================================================
+      Theme Name: Avilon
+      Theme URL: https://bootstrapmade.com/avilon-bootstrap-landing-page-template/
+      Author: BootstrapMade.com
+      License: https://bootstrapmade.com/license/
+    ======================================================= -->
 </head>
 
 <body>
@@ -102,21 +106,14 @@
   <header id="header">
     <div class="container">
 
-      <!--<div id="logo" class="pull-left">-->
-        <!--<h1><a href="#intro" class="scrollto">Avilon</a></h1>-->
-        <!--&lt;!&ndash; Uncomment below if you prefer to use an image logo &ndash;&gt;-->
-        <!--&lt;!&ndash; <a href="#intro"><img src="img/logo.png" alt="" title=""></a> &ndash;&gt;-->
-      <!--</div>-->
-
       <nav id="nav-menu-container">
         <ul class="nav-menu">
           <li class="menu-active"><a href="#intro">Home</a></li>
-          <!-- <li><a href="#about">About Us</a></li> -->
           <li><a href="#features">Oil Lamp</a></li>
 
           <li><a href="#team">Team</a></li>
 
-          
+
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
@@ -145,11 +142,10 @@
     <section id="about" class="section-bg">
       <div class="container-fluid">
         <div class="section-header">
-          <h3 class="section-title">About Us</h3>
+          <h3 class="section-title">Stay Connected</h3>
           <span class="section-divider"></span>
           <p class="section-description">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque<br>
-            sunt in culpa qui officia deserunt mollit anim id est laborum
+            This page gives you virtual connetivity to the event you are invited
           </p>
         </div>
 
@@ -178,206 +174,24 @@
 
 </style>
           <div class="col-lg-6 content wow fadeInRight" style="text-align: center">
-           		<button class="custom-btn" onclick="client.connect(options);">Connect</button>
-				<!-- <button onclick="client.subscribe('intopic'); alert('Subscribed');">2. Subscribe</button> -->
-				<button class="custom-btn" onclick="publish('00','outtopic',0);">Disconnect</button>
+              <button class="custom-btn" onclick="client.connect(options);">Connect</button>
+        <!-- <button onclick="client.subscribe('intopic'); alert('Subscribed');">2. Subscribe</button> -->
+        <button class="custom-btn" onclick="client.disconnect();">Disconnect</button>
         <br><br>
-				<button class="custom-btn" id="myBtn" onclick="publish('11','outtopic',0);disableBtn();">Lamp 1</button>
+        <button class="custom-btn" id="myBtn1" onclick="publish('11','outtopic',0,'myBtn1');">Lamp 1</button>
         <br><br>
-    		<button class="custom-btn" onclick="publish('21','outtopic',0);">Lamp 2</button>
+        <button class="custom-btn" id="myBtn2" onclick="publish('21','outtopic',0,'myBtn2');">Lamp 2</button>
         <br><br>
-				<button class="custom-btn" onclick="publish('31','outtopic',0);">Lamp 3</button>
+        <button class="custom-btn" id="myBtn3" onclick="publish('31','outtopic',0,'myBtn3');">Lamp 3</button>
         <br><br>
-        <button class="custom-btn" onclick="publish('41','outtopic',0);">Lamp 4</button>
+        <button class="custom-btn" id="myBtn4" onclick="publish('41','outtopic',0,'myBtn4');">Lamp 4</button>
         <br><br>
-        <button class="custom-btn" onclick="publish('51','outtopic',0);">Lamp 5</button>
+        <button class="custom-btn" id="myBtn5" onclick="publish('51','outtopic',0,'myBtn5');">Lamp 5</button>
         </div>
         </div>
 
       </div>
-    </section><!-- #about -->
-
-    <!--&lt;!&ndash;==========================-->
-      <!--Product Featuress Section-->
-    <!--============================&ndash;&gt;-->
-    <!--<section id="features">-->
-      <!--<div class="container">-->
-
-        <!--<div class="row">-->
-
-          <!--<div class="col-lg-8 offset-lg-4">-->
-            <!--<div class="section-header wow fadeIn" data-wow-duration="1s">-->
-              <!--<h3 class="section-title">Product Featuress</h3>-->
-              <!--<span class="section-divider"></span>-->
-            <!--</div>-->
-          <!--</div>-->
-
-          <!--<div class="col-lg-4 col-md-5 features-img">-->
-            <!--<img src="img/product-features.png" alt="" class="wow fadeInLeft">-->
-          <!--</div>-->
-
-          <!--<div class="col-lg-8 col-md-7 ">-->
-
-            <!--<div class="row">-->
-
-              <!--<div class="col-lg-6 col-md-6 box wow fadeInRight">-->
-                <!--<div class="icon"><i class="ion-ios-speedometer-outline"></i></div>-->
-                <!--<h4 class="title"><a href="">Lorem Ipsum</a></h4>-->
-                <!--<p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident clarida perendo.</p>-->
-              <!--</div>-->
-              <!--<div class="col-lg-6 col-md-6 box wow fadeInRight" data-wow-delay="0.1s">-->
-                <!--<div class="icon"><i class="ion-ios-flask-outline"></i></div>-->
-                <!--<h4 class="title"><a href="">Dolor Sitema</a></h4>-->
-                <!--<p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata noble dynala mark.</p>-->
-              <!--</div>-->
-              <!--<div class="col-lg-6 col-md-6 box wow fadeInRight data-wow-delay="0.2s">-->
-                <!--<div class="icon"><i class="ion-social-buffer-outline"></i></div>-->
-                <!--<h4 class="title"><a href="">Sed ut perspiciatis</a></h4>-->
-                <!--<p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur teleca starter sinode park ledo.</p>-->
-              <!--</div>-->
-              <!--<div class="col-lg-6 col-md-6 box wow fadeInRight" data-wow-delay="0.3s">-->
-                <!--<div class="icon"><i class="ion-ios-analytics-outline"></i></div>-->
-                <!--<h4 class="title"><a href="">Magni Dolores</a></h4>-->
-                <!--<p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum dinoun trade capsule.</p>-->
-              <!--</div>-->
-            <!--</div>-->
-
-          <!--</div>-->
-
-        <!--</div>-->
-
-      <!--</div>-->
-
-    <!--</section>&lt;!&ndash; #features &ndash;&gt;-->
-
-    <!--&lt;!&ndash;==========================-->
-      <!--Product Advanced Featuress Section-->
-    <!--============================&ndash;&gt;-->
-    <!--<section id="advanced-features">-->
-
-      <!--<div class="features-row section-bg">-->
-        <!--<div class="container">-->
-          <!--<div class="row">-->
-            <!--<div class="col-12">-->
-              <!--<img class="advanced-feature-img-right wow fadeInRight" src="img/advanced-feature-1.jpg" alt="">-->
-              <!--<div class="wow fadeInLeft">-->
-                <!--<h2>Duis aute irure dolor in reprehenderit in voluptate velit esse</h2>-->
-                <!--<h3>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h3>-->
-                <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>-->
-                <!--<p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-
-      <!--<div class="features-row">-->
-        <!--<div class="container">-->
-          <!--<div class="row">-->
-            <!--<div class="col-12">-->
-              <!--<img class="advanced-feature-img-left" src="img/advanced-feature-2.jpg" alt="">-->
-              <!--<div class="wow fadeInRight">-->
-                <!--<h2>Duis aute irure dolor in reprehenderit in voluptate velit esse</h2>-->
-                <!--<i class="ion-ios-paper-outline" class="wow fadeInRight" data-wow-duration="0.5s"></i>-->
-                <!--<p class="wow fadeInRight" data-wow-duration="0.5s">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>-->
-                <!--<i class="ion-ios-color-filter-outline wow fadeInRight" data-wow-delay="0.2s" data-wow-duration="0.5s"></i>-->
-                <!--<p class="wow fadeInRight" data-wow-delay="0.2s" data-wow-duration="0.5s">Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.</p>-->
-                <!--<i class="ion-ios-barcode-outline wow fadeInRight" data-wow-delay="0.4" data-wow-duration="0.5s"></i>-->
-                <!--<p class="wow fadeInRight" data-wow-delay="0.4s" data-wow-duration="0.5s">Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.</p>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-
-      <!--<div class="features-row section-bg">-->
-        <!--<div class="container">-->
-          <!--<div class="row">-->
-            <!--<div class="col-12">-->
-              <!--<img class="advanced-feature-img-right wow fadeInRight" src="img/advanced-feature-3.jpg" alt="">-->
-              <!--<div class="wow fadeInLeft">-->
-                <!--<h2>Duis aute irure dolor in reprehenderit in voluptate velit esse</h2>-->
-                <!--<h3>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h3>-->
-                <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>-->
-                <!--<i class="ion-ios-albums-outline"></i>-->
-                <!--<p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</section>&lt;!&ndash; #advanced-features &ndash;&gt;-->
-
-    <!--&lt;!&ndash;==========================-->
-      <!--Call To Action Section-->
-    <!--============================&ndash;&gt;-->
-    <!--<section id="call-to-action">-->
-      <!--<div class="container">-->
-        <!--<div class="row">-->
-          <!--<div class="col-lg-9 text-center text-lg-left">-->
-            <!--<h3 class="cta-title">Call To Action</h3>-->
-            <!--<p class="cta-text"> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>-->
-          <!--</div>-->
-          <!--<div class="col-lg-3 cta-btn-container text-center">-->
-            <!--<a class="cta-btn align-middle" href="#">Call To Action</a>-->
-          <!--</div>-->
-        <!--</div>-->
-
-      <!--</div>-->
-    <!--</section>&lt;!&ndash; #call-to-action &ndash;&gt;-->
-
-    <!--&lt;!&ndash;==========================-->
-      <!--More Features Section-->
-    <!--============================&ndash;&gt;-->
-    <!--<section id="more-features" class="section-bg">-->
-      <!--<div class="container">-->
-
-        <!--<div class="section-header">-->
-          <!--<h3 class="section-title">More Features</h3>-->
-          <!--<span class="section-divider"></span>-->
-          <!--<p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>-->
-        <!--</div>-->
-
-        <!--<div class="row">-->
-
-          <!--<div class="col-lg-6">-->
-            <!--<div class="box wow fadeInLeft">-->
-              <!--<div class="icon"><i class="ion-ios-stopwatch-outline"></i></div>-->
-              <!--<h4 class="title"><a href="">Lorem Ipsum</a></h4>-->
-              <!--<p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident etiro rabeta lingo.</p>-->
-            <!--</div>-->
-          <!--</div>-->
-
-          <!--<div class="col-lg-6">-->
-            <!--<div class="box wow fadeInRight">-->
-              <!--<div class="icon"><i class="ion-ios-bookmarks-outline"></i></div>-->
-              <!--<h4 class="title"><a href="">Dolor Sitema</a></h4>-->
-              <!--<p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata nodera clas.</p>-->
-            <!--</div>-->
-          <!--</div>-->
-
-          <!--<div class="col-lg-6">-->
-            <!--<div class="box wow fadeInLeft">-->
-              <!--<div class="icon"><i class="ion-ios-heart-outline"></i></div>-->
-              <!--<h4 class="title"><a href="">Sed ut perspiciatis</a></h4>-->
-              <!--<p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur trinige zareta lobur trade.</p>-->
-            <!--</div>-->
-          <!--</div>-->
-
-          <!--<div class="col-lg-6">-->
-            <!--<div class="box wow fadeInRight">-->
-              <!--<div class="icon"><i class="ion-ios-analytics-outline"></i></div>-->
-              <!--<h4 class="title"><a href="">Magni Dolores</a></h4>-->
-              <!--<p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum rideta zanox satirente madera</p>-->
-            <!--</div>-->
-          <!--</div>-->
-
-        <!--</div>-->
-      <!--</div>-->
-    <!--</section>&lt;!&ndash; #more-features &ndash;&gt;-->
-
-
-   <!--&lt;!&ndash; #more-features &ndash;&gt;-->
+    </section>
 
 
 
@@ -430,8 +244,8 @@
 
 
 
-    
- 
+
+
 
   <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
@@ -453,4 +267,3 @@
 
 </body>
 </html>
-
