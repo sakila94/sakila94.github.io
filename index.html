@@ -33,7 +33,7 @@
 	//Using the HiveMQ public Broker, with a random client Id
 	 //var client = new Paho.MQTT.Client("broker.mqttdashboard.com", 8000, "myclientid_athavan" );//parseInt(Math.random() * 100, 10)
 	//var client = new Paho.MQTT.Client("iot.eclipse.org", Number(1883), "/ws", "clientId12354");
-	var client = new Paho.MQTT.Client("ws://iot.eclipse.org/ws", "myClientId" + new Date().getTime());
+	var client = new Paho.MQTT.Client("wss://iot.eclipse.org:443/ws", "myClientId" + new Date().getTime());
 
 	// set callback handlers
 	client.onConnectionLost = function (responseObject) {
